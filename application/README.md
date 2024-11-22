@@ -2,7 +2,7 @@
 ## App.java:
 ![image](https://github.com/user-attachments/assets/e87d2b2d-dac3-4e2d-bcef-ea0c1af06fe2)
 
-Le fichier **App.java** contient la déclaration du webserver utilisé pour faire fonctionner les API. Le port d'écoute du webserver est le **port 8080**. L'ensemble des fichiers du dossier webserver sont les fichier du projet [PolyNames](https://github.com/mateohubert2/PolyNames). 
+Le fichier **App.java** contient la déclaration du webserver utilisé pour faire fonctionner les API. Le port d'écoute du webserver est le **port 8080**. L'ensemble des fichiers du dossier webserver sont les fichiers du projet [PolyNames](https://github.com/mateohubert2/PolyNames). 
 ### API:
 **`http://localhost:8080/polycalculator/id/:id`** Cette API se utilise la méthode **GET**. Il faut fournir l'id d'un calcul qui a été réalisé afin d'en récupérer le résultat. Cette API appelle la fonction [GetCalculResult](##GetCalculResult) de [CalculController.java](#CalculController.java.).
 
