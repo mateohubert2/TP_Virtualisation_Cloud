@@ -1,2 +1,4 @@
 application/backend/.vscode/
 application/backend/bin/
+foundation/.terraform/
+foundation/.terraform.lock.hcl
