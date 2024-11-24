@@ -1,8 +1,9 @@
 package redis;
-import redis.clients.jedis.Jedis;
-public class RedisSender {
-    private static Jedis jedis;
 
+import redis.clients.jedis.Jedis;
+
+public class RedisReceiver {
+    private static Jedis jedis;
     public static void Connect(){
         try {
             jedis = new Jedis("localhost", 6379);
@@ -12,11 +13,10 @@ public class RedisSender {
         }
     }
 
-    public static void Send(){
-        jedis.set("username", "JohnDoe");
-    
-        String username = jedis.get("username");
-        System.out.println("Le nom d'utilisateur est : " + username);
+    public static String GetResult(String id){
+        String result = jedis.get(id);
+        System.out.println("Le resultat est : " + result);
+        return result;
     }
 
     public static void Disconnect() {

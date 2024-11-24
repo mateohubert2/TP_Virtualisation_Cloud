@@ -3,6 +3,10 @@ package rabbit;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -12,6 +16,7 @@ import redis.RedisSender;
 
 public class RabbitMQReceiver {
     private final static String QUEUE_NAME = "PolyCalculatorQueue";
+    static private Object eval;
     static private Channel channel;
     static private Connection connection;
     public static void Connect(String host, String user, String password){
@@ -41,11 +46,8 @@ public class RabbitMQReceiver {
         }
         System.out.println("Connecté à la queue : " + QUEUE_NAME);
 
-        System.out.println("En attente des messages...");
-
         DeliverCallback deliverCallback = (consumerTag, delivery) -> {
             String message = new String(delivery.getBody(), "UTF-8");
-            System.out.println("Message reçu : " + message);
             message = message.replaceAll("[{}]", "");
         
             String[] parts = message.split(",");
@@ -61,11 +63,13 @@ public class RabbitMQReceiver {
                     calcul = part.split(":")[1].trim();
                 }
             }
-
-            System.out.println("id: " + id);
-            System.out.println("calcul: " + calcul);
-            RedisSender.Send();
-            RedisSender.Disconnect();
+            try {
+                ScriptEngine engine = new ScriptEngineManager().getEngineByName("JavaScript");
+                eval = engine.eval(calcul);
+            } catch (ScriptException e) {
+                System.out.println("Erreur lors de l'évaluation : " + e.getMessage());
+            }
+            RedisSender.Send(id, eval);
         };
 
         try {

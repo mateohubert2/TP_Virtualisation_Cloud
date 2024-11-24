@@ -1,7 +1,6 @@
 import controllers.CalculController;
-import rabbit.RabbitMQReceiver;
 import rabbit.RabbitMQSender;
-import redis.RedisSender;
+import redis.RedisReceiver;
 import webserver.WebServer;
 import webserver.WebServerContext;
 
@@ -12,8 +11,9 @@ public class App {
         webserver.listen(8080);
         
         RabbitMQSender.Connect("localhost", "guest", "guest");
-        RabbitMQReceiver.Connect("localhost", "guest", "guest");
-        RedisSender.Connect();
+        //RabbitMQReceiver.Connect("localhost", "guest", "guest");
+        //RedisSender.Connect();
+        RedisReceiver.Connect();
 
         //Création de la route pour récupérer un résultat en fonction de l'id
         webserver.getRouter().get("/polycalculator/id/:id", (WebServerContext context) -> { CalculController.GetCalculResult(context); });
