@@ -1,4 +1,5 @@
 import controllers.CalculController;
+import rabbit.RabbitMQSender;
 import webserver.WebServer;
 import webserver.WebServerContext;
 
@@ -7,6 +8,8 @@ public class App {
         //Démarre un webserver qui écoute sur le port 8080
         WebServer webserver = new WebServer();
         webserver.listen(8080);
+        
+        RabbitMQSender.Connect("localhost", "guest", "guest");
 
         //Création de la route pour récupérer un résultat en fonction de l'id
         webserver.getRouter().get("/polycalculator/id/:id", (WebServerContext context) -> { CalculController.GetCalculResult(context); });
