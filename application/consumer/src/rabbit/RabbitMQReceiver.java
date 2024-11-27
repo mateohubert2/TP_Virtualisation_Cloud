@@ -22,6 +22,7 @@ public class RabbitMQReceiver {
     public static void Connect(String host, String user, String password){
         ConnectionFactory factory = new ConnectionFactory();
         factory.setHost(host);
+        factory.setPort(5672);
         factory.setUsername(user);
         factory.setPassword(password);
 
@@ -40,16 +41,16 @@ public class RabbitMQReceiver {
         }
 
         try {
-            channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+            channel.queueDeclare(QUEUE_NAME, true, false, false, null);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
         System.out.println("Connecté à la queue : " + QUEUE_NAME);
 
         DeliverCallback deliverCallback = (consumerTag, delivery) -> {
+            System.out.println("DANS LE TRAITEMENT DU MESSAGE");
             String message = new String(delivery.getBody(), "UTF-8");
             message = message.replaceAll("[{}]", "");
-        
             String[] parts = message.split(",");
             
             String id = null;
@@ -65,14 +66,17 @@ public class RabbitMQReceiver {
             }
             try {
                 ScriptEngine engine = new ScriptEngineManager().getEngineByName("JavaScript");
+                System.out.println("ENVOI DU MESSAGE1111");
                 eval = engine.eval(calcul);
             } catch (ScriptException e) {
                 System.out.println("Erreur lors de l'évaluation : " + e.getMessage());
             }
+            System.out.println("ENVOI DU MESSAGE");
             RedisSender.Send(id, eval);
         };
 
         try {
+            System.out.println("DANS ATTENTE DU MESSAGE");
             channel.basicConsume(QUEUE_NAME, true, deliverCallback, consumerTag -> { });
         } catch (IOException e) {
             System.out.println(e.getMessage());

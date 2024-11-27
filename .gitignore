@@ -4,3 +4,4 @@ foundation/.terraform/
 foundation/.terraform.lock.hcl
 application/consumer/.vscode/
 application/consumer/bin/
+application/frontend/node_modules/

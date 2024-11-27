@@ -1,11 +1,5 @@
 package controllers;
 
-import java.util.ArrayList;
-
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
-
 import rabbit.RabbitMQSender;
 import redis.RedisReceiver;
 import webserver.WebServerContext;
@@ -26,7 +20,7 @@ public class CalculController {
         calculString = calculString.replace("pard", ")");
         RabbitMQSender.SendCalcul(id, calculString);
         try {
-            Thread.sleep(450);
+            Thread.sleep(500);
         } catch (InterruptedException e) {
             System.out.println(e.getMessage());
         }

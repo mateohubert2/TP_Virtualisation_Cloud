@@ -1,5 +1,6 @@
 import { CalculService } from "./calcul-service.js";
 var calculDisplay = ""
+var display;
 function run(){
     var calcul = ""
     var lastKey = 0
@@ -11,7 +12,9 @@ function run(){
         calcul += "0"
         calculDisplay += "0"
         lastKey = 0
-        displayResult()
+        //displayResult()
+        display = document.getElementById("display")
+        display.innerHTML = calculDisplay
     })
 
     const btn1 = document.getElementById("btn1")
@@ -22,7 +25,9 @@ function run(){
         calcul += "1"
         calculDisplay += "1"
         lastKey = 0
-        displayResult()
+        //displayResult()
+        display = document.getElementById("display")
+        display.innerHTML = calculDisplay
     })
 
     const btn2 = document.getElementById("btn2")
@@ -33,7 +38,9 @@ function run(){
         calcul += "2"
         calculDisplay += "2"
         lastKey = 0
-        displayResult()
+        //displayResult()
+        display = document.getElementById("display")
+        display.innerHTML = calculDisplay
     })
 
     const btn3 = document.getElementById("btn3")
@@ -44,7 +51,9 @@ function run(){
         calcul += "3"
         calculDisplay += "3"
         lastKey = 0
-        displayResult()
+        //displayResult()
+        display = document.getElementById("display")
+        display.innerHTML = calculDisplay
     })
 
     const btn4 = document.getElementById("btn4")
@@ -55,7 +64,9 @@ function run(){
         calcul += "4"
         calculDisplay += "4"
         lastKey = 0
-        displayResult()
+        //displayResult()
+        display = document.getElementById("display")
+        display.innerHTML = calculDisplay
     })
 
     const btn5 = document.getElementById("btn5")
@@ -66,7 +77,9 @@ function run(){
         calcul += "5"
         calculDisplay += "5"
         lastKey = 0
-        displayResult()
+        //displayResult()
+        display = document.getElementById("display")
+        display.innerHTML = calculDisplay
     })
 
     const btn6 = document.getElementById("btn6")
@@ -77,7 +90,9 @@ function run(){
         calcul += "6"
         calculDisplay += "6"
         lastKey = 0
-        displayResult()
+        //displayResult()
+        display = document.getElementById("display")
+        display.innerHTML = calculDisplay
     })
 
     const btn7 = document.getElementById("btn7")
@@ -88,7 +103,9 @@ function run(){
         calcul += "7"
         calculDisplay += "7"
         lastKey = 0
-        displayResult()
+        //displayResult()
+        display = document.getElementById("display")
+        display.innerHTML = calculDisplay
     })
 
     const btn8 = document.getElementById("btn8")
@@ -99,7 +116,9 @@ function run(){
         calcul += "8"
         calculDisplay += "8"
         lastKey = 0
-        displayResult()
+        //displayResult()
+        display = document.getElementById("display")
+        display.innerHTML = calculDisplay
     })
 
     const btn9 = document.getElementById("btn9")
@@ -110,7 +129,9 @@ function run(){
         calcul += "9"
         calculDisplay += "9"
         lastKey = 0
-        displayResult()
+        //displayResult()
+        display = document.getElementById("display")
+        display.innerHTML = calculDisplay
     })
 
     const point = document.getElementById("point")
@@ -121,7 +142,9 @@ function run(){
         calcul += "."
         calculDisplay += "."
         lastKey = 0
-        displayResult()
+        //displayResult()
+        display = document.getElementById("display")
+        display.innerHTML = calculDisplay
     })
 
     const add = document.getElementById("add")
@@ -132,7 +155,9 @@ function run(){
         calcul += "+"
         calculDisplay += "+"
         lastKey = 0
-        displayResult()
+        //displayResult()
+        display = document.getElementById("display")
+        display.innerHTML = calculDisplay
     })
 
     const min = document.getElementById("min")
@@ -143,7 +168,9 @@ function run(){
         calcul += "-"
         calculDisplay += "-"
         lastKey = 0
-        displayResult()
+        //displayResult()
+        display = document.getElementById("display")
+        display.innerHTML = calculDisplay
     })
 
     const time = document.getElementById("time")
@@ -154,7 +181,9 @@ function run(){
         calcul += "*"
         calculDisplay += "*"
         lastKey = 0
-        displayResult()
+        //displayResult()
+        display = document.getElementById("display")
+        display.innerHTML = calculDisplay
     })
 
     const div = document.getElementById("div")
@@ -165,7 +194,9 @@ function run(){
         calcul += "div"
         calculDisplay += "/"
         lastKey = 1
-        displayResult()
+        //displayResult()
+        display = document.getElementById("display")
+        display.innerHTML = calculDisplay
     })
 
     const parl = document.getElementById("parl")
@@ -176,7 +207,9 @@ function run(){
         calcul += "parl"
         calculDisplay += "("
         lastKey = 2
-        displayResult()
+        //displayResult()
+        display = document.getElementById("display")
+        display.innerHTML = calculDisplay
     })
 
     const pard = document.getElementById("pard")
@@ -187,7 +220,9 @@ function run(){
         calcul += "pard"
         calculDisplay += ")"
         lastKey = 2
-        displayResult()
+        //displayResult()
+        display = document.getElementById("display")
+        display.innerHTML = calculDisplay
     })
 
     const reset = document.getElementById("reset")
@@ -195,7 +230,9 @@ function run(){
         calcul = ""
         calculDisplay = ""
         lastKey = 0
-        displayResult()
+        //displayResult()
+        display = document.getElementById("display")
+        display.innerHTML = calculDisplay
     })
 
     const del = document.getElementById("del")
@@ -211,7 +248,9 @@ function run(){
             calcul = calcul.slice(0, -4)
             calculDisplay = calculDisplay.slice(0, -1)
         }
-        displayResult()
+        //displayResult()
+        display = document.getElementById("display")
+        display.innerHTML = calculDisplay
     })
 
     const equal = document.getElementById("equal")
@@ -221,7 +260,9 @@ function run(){
             CalculService.getResult(id).then((result) =>{
                 calculDisplay = result
                 calcul = ""
-                displayResult()
+                //displayResult()
+                display = document.getElementById("display")
+                display.innerHTML = calculDisplay
             })
         })
     })
@@ -232,4 +273,4 @@ function displayResult(){
     display.innerHTML = calculDisplay
 }
 
-window.addEventListener("load", run)
+window.addEventListener("DOMContentLoaded", run)

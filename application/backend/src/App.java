@@ -10,7 +10,7 @@ public class App {
         WebServer webserver = new WebServer();
         webserver.listen(8080);
         
-        RabbitMQSender.Connect("localhost", "guest", "guest");
+        RabbitMQSender.Connect("rabbitmq", "guest", "guest");
         //RabbitMQReceiver.Connect("localhost", "guest", "guest");
         //RedisSender.Connect();
         RedisReceiver.Connect();
