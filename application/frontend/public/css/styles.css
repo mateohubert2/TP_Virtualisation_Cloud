@@ -103,3 +103,46 @@ button.yellow {
 button.yellow:hover {
     background-color: #f39c12;
 }
+
+.container {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 2rem;
+}
+
+.id-section {
+    background-color: #333;
+    padding: 1.5rem;
+    border-radius: 10px;
+    min-width: 250px;
+}
+
+.current-id, .id-lookup {
+    margin-bottom: 1.5rem;
+}
+
+.id-section h3 {
+    color: white;
+    margin-bottom: 1rem;
+}
+
+#current-calculation-id {
+    color: #4fcfb9;
+    font-size: 1.2rem;
+}
+
+#id-input {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: none;
+    border-radius: 5px;
+    background-color: #444;
+    color: white;
+}
+
+#get-result {
+    width: 100%;
+}

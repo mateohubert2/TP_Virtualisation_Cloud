@@ -1,6 +1,7 @@
 import { CalculService } from "./calcul-service.js";
 var calculDisplay = ""
 var display;
+var currentCalculationId = null;
 function run(){
     var calcul = ""
     var lastKey = 0
@@ -257,15 +258,37 @@ function run(){
     equal.addEventListener("click", ()=>{
         lastKey = 3
         CalculService.sendCalcul(calcul).then((id) => {
+            currentCalculationId = id;
+            document.getElementById("current-calculation-id").textContent = id;
+            
             CalculService.getResult(id).then((result) =>{
                 calculDisplay = result
                 calcul = ""
-                //displayResult()
                 display = document.getElementById("display")
                 display.innerHTML = calculDisplay
             })
         })
     })
+
+    const getResultButton = document.getElementById("get-result")
+    getResultButton.addEventListener("click", () => {
+        const idInput = document.getElementById("id-input");
+        const searchId = idInput.value.trim();
+        
+        if (searchId) {
+            CalculService.getResult(searchId).then((result) => {
+                if (result !== null) {
+                    calculDisplay = result;
+                    display = document.getElementById("display");
+                    display.innerHTML = calculDisplay;
+                    lastKey = 3;
+                } else {
+                    display = document.getElementById("display");
+                    display.innerHTML = "ID non trouvé";
+                }
+            });
+        }
+    });
 }
 
 function displayResult(){
