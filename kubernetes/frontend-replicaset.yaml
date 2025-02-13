@@ -15,6 +15,7 @@ spec:
       containers:
       - name: frontend
         image: europe-west1-docker.pkg.dev/polytech-dijon/polytech-dijon/frontend-mh:hubert
+        imagePullPolicy: Always
         resources:
           requests:
             cpu: "4m"
