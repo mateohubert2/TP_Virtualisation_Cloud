@@ -6,7 +6,7 @@ public class RedisReceiver {
     private static Jedis jedis;
     public static void Connect(){
         try {
-            jedis = new Jedis("redis", 6379);
+            jedis = new Jedis("10.2.6.129", 6379);
             System.out.println("Connexion à Redis réussie.");
         } catch (Exception e) {
             System.out.println("Erreur lors de la connexion à Redis : " + e.getMessage());
