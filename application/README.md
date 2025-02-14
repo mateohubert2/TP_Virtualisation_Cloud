@@ -5,9 +5,9 @@
 
 Le fichier **App.java** contient la déclaration du webserver utilisé pour faire fonctionner les API. Le port d'écoute du webserver est le **port 8080**. L'ensemble des fichiers du dossier webserver sont les fichiers du projet [PolyNames](https://github.com/mateohubert2/PolyNames). Pour que le backend fonctionne correctement sur kubernetes, il faut indiquer l'adresse IP du service de rabbitmq et de redis sinon, la connexion ne se fait pas et l'application ne fonctionne pas voir les pods ne se lance pas.
 ### API:
-**`polycalculator/id/:id`** Cette API se utilise la méthode **GET**. Il faut fournir l'id d'un calcul qui a été réalisé afin d'en récupérer le résultat. Cette API appelle la fonction [GetCalculResult](##GetCalculResult) de [CalculController.java](#CalculController.java.).
+**`polycalculator/id/:id`** Cette API utilise la méthode **GET**. Il faut fournir l'id d'un calcul qui a été réalisé afin d'en récupérer le résultat. Cette API appelle la fonction [GetCalculResult](##GetCalculResult) de [CalculController.java](#CalculController.java.).
 
-**`polycalculator/calcul/:calcul`** Cette API se utilise la méthode **POST**. Il faut fournir le calcul à réaliser en respectant les correspondances ci-dessous:
+**`polycalculator/calcul/:calcul`** Cette API utilise la méthode **POST**. Il faut fournir le calcul à réaliser en respectant les correspondances ci-dessous:
 | Calculatrice | API |
 |-----------|-----------|
 | 0  | 0  |
@@ -36,7 +36,8 @@ Cette API appelle la fonction [CalculProcess](##CalculProcess) de [CalculControl
 ![image](https://github.com/user-attachments/assets/8c8ae4f3-008c-4452-9d9e-9056cf6c899b)
 
 
-La fonction CalculProcess créée une **request** qui correspond au context qui fait la requête sur l'API ainsi qu'une **response** pour pouvoir répondre après le traitement de la requête. Dans un premier temps, on récupère le calcul en tant que **String** dans **calculString**. Ensuite, on remplace tout les mots par leur symbole. Dans le calcul transmit à l'API, 3 opérateurs sont des mots car sinon il y a une erreur de route lors de l'envoi. Ensuite, on envoie l'id et le calcul à faire à RabbitMQ. L'id du calcul est renvoyé comme réponse.
+La fonction CalculProcess créée une **request** qui correspond au context qui fait la requête sur l'API ainsi qu'une **response** pour pouvoir répondre après le traitement de la requête. Dans un premier temps, on récupère le calcul en tant que **String** dans **calculString**. Ensuite, on remplace tous les mots par leur symbole. Dans le calcul transmis à l'API, 3 opérateurs sont des mots, car sinon il y a une erreur de route lors de l'envoi. Ensuite, on envoie l'id et le calcul à faire à RabbitMQ. L'id du calcul est renvoyé comme réponse.
+
 
 ## GetCalculResult:
 ![image](https://github.com/user-attachments/assets/54448cad-ca4f-4fae-927b-598cc56e6973)
@@ -47,11 +48,11 @@ La fonction GetCalculResult créée une **request** qui correspond au context qu
 # Consumer
 ![image](https://github.com/user-attachments/assets/31a6b43a-3f92-401f-a1c9-25ea8b8afa4c)
 
-Dans un premier temps, le consumer se connecte à RabbitMQ plus précisement sur la même queue que le backend. 
+Dans un premier temps, le consumer se connecte à RabbitMQ plus précisement sur le même channel que le backend. 
 
 ![image](https://github.com/user-attachments/assets/f4f41c2b-238f-4b2e-bd32-84e64d23317e)
 
-Ensuite, une fois qu'un calcul arrive dans la queue depuis le backend, le consumer le récupère, le néttoie (on garde uniquemen l'id et le calcul à faire). Grâce à la fonction eval, on fait le calcul puis on envoie à Redis, l'id et le calcul.
+Ensuite, une fois qu'un calcul arrive dans la queue depuis le backend, le consumer le récupère, le nettoie (on garde uniquement l'id et le calcul à faire). Grâce à la fonction eval, on fait le calcul puis on envoie à Redis, l'id et le calcul.
 # Redis
 La nomenclature pour stocker le résultat est simplement la suivante: (id, résultat)
 
@@ -69,13 +70,13 @@ Le fichier style.css permet d'avoir une coloration des différents boutons et de
 ## script.js:
 ![image](https://github.com/user-attachments/assets/4392d652-1017-4c71-a9de-7166776bc790)
 
-Le fichier script.js permet quand à lui de faire fonctionner la calculatrice avec le backend. Pour chaque bouton, un  EventListener sur le click est déclaré.
+Le fichier script.js permet quant à lui de faire fonctionner la calculatrice avec le backend. Pour chaque bouton, un  EventListener sur le click est déclaré.
 
-Ensuite, la variable calcul représente le calcul à envoyer à l'API. Elle est donc de la forme: "1+parl2div4pard*3". La variable calculDisplay est quand à elle destinée à être affichée sur l'écran de la calculatrice. Elle est donc de la forme: 1+(2/4)*3.
+Ensuite, la variable calcul représente le calcul à envoyer à l'API. Elle est donc de la forme: "1+parl2div4pard*3". La variable calculDisplay est quant à elle destinée à être affichée sur l'écran de la calculatrice. Elle est donc de la forme: 1+(2/4)*3.
 
 ![image](https://github.com/user-attachments/assets/5cb8a84c-fdc9-4835-9157-2e62c6aa88c5)
 
-Un bouton particulier est le bouton DEL. En effet, quand il faut supprimer le dernier élément ajouté, il y a une nuance entre calcul et calculDisplay. Pour calculDisplay, il suffit de supprimer le dernier caractère avec **calculDisplay  =  calculDisplay.slice(0, -1)**. Cependant pour calcul qui est envoyé à l'API, un **/** étant **div** et une **(** etant **parl ou pard**, il faut supprimer entre 3 et 4 caractères pour avoir un calcul correct. La variable **lastKey** permet donc de savoir la dernière touche à avoir été appuyée pour savoir si il faut supprimer 1, 3 ou 4 caractères.
+Un bouton particulier est le bouton DEL. En effet, quand il faut supprimer le dernier élément ajouté, il y a une nuance entre calcul et calculDisplay. Pour calculDisplay, il suffit de supprimer le dernier caractère avec **calculDisplay  =  calculDisplay.slice(0, -1)**. Cependant pour calcul qui est envoyé à l'API, un **/** étant **div** et une **(** etant **parl ou pard**, il faut supprimer entre 3 et 4 caractères pour avoir un calcul correct. La variable **lastKey** permet donc de savoir la dernière touche à avoir été appuyée pour savoir s'il faut supprimer 1, 3 ou 4 caractères.
 
 ![image](https://github.com/user-attachments/assets/ebe7bcdf-cec4-412a-8103-cbcc60acc469)
 
